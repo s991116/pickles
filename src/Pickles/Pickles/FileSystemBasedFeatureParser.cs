@@ -19,7 +19,9 @@
 //  --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.IO.Abstractions;
+using System.Text;
 using PicklesDoc.Pickles.ObjectModel;
 
 namespace PicklesDoc.Pickles
@@ -39,24 +41,47 @@ namespace PicklesDoc.Pickles
         public Feature Parse(string filename)
         {
             Feature feature = null;
-            using (var reader = this.fileSystem.FileInfo.FromFileName(filename).OpenText())
+            var encoding = this.GetEncoding(filename);
+            using (var fileStream = this.fileSystem.FileInfo.FromFileName(filename).OpenRead())
             {
-                try
+                using (var specificEncoderReader = new StreamReader(fileStream, encoding))
                 {
-                    feature = this.parser.Parse(reader);
-                }
-                catch (FeatureParseException e)
-                {
-                    string message =
-                        $"There was an error parsing the feature file here: {this.fileSystem.Path.GetFullPath(filename)}" + Environment.NewLine +
-                        $"Errormessage was: '{e.Message}'";
-                    throw new FeatureParseException(message, e);
-                }
+                    try
+                    {
+                        feature = this.parser.Parse(specificEncoderReader);
+                    }
+                    catch (FeatureParseException e)
+                    {
+                        string message =
+                            $"There was an error parsing the feature file here: {this.fileSystem.Path.GetFullPath(filename)}" +
+                            Environment.NewLine +
+                            $"Errormessage was: '{e.Message}'";
+                        throw new FeatureParseException(message, e);
+                    }
+                    specificEncoderReader.Close();
 
-                reader.Close();
+                }
+                fileStream.Close();
             }
 
             return feature;
+        }
+
+        private Encoding GetEncoding(string filename)
+        {
+            var bom = new byte[4];
+            using (var file = this.fileSystem.FileInfo.FromFileName(filename).OpenRead())
+            {
+                file.Read(bom, 0, 4);
+            }
+
+            // Analyze the BOM
+            if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76) return Encoding.UTF7;
+            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) return Encoding.UTF8;
+            if (bom[0] == 0xff && bom[1] == 0xfe) return Encoding.Unicode; //UTF-16LE
+            if (bom[0] == 0xfe && bom[1] == 0xff) return Encoding.BigEndianUnicode; //UTF-16BE
+            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff) return Encoding.UTF32;
+            return Encoding.Default;
         }
     }
 }
