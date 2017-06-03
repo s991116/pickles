@@ -15,6 +15,11 @@ namespace PicklesDoc.Pickles
 
         public Encoding GetEncoding(string filename)
         {
+            if (filename == null)
+            {
+                throw new ArgumentNullException();
+            }
+
             var bom = new byte[4];
             using (var file = this.fileSystem.FileInfo.FromFileName(filename).OpenRead())
             {
