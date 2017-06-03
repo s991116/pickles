@@ -44,7 +44,7 @@ namespace PicklesDoc.Pickles
         public Feature Parse(string filename)
         {
             Feature feature = null;
-            var encoding = this.GetEncoding(filename);
+            var encoding = this.encodingDetector.GetEncoding(filename);
             using (var fileStream = this.fileSystem.FileInfo.FromFileName(filename).OpenRead())
             {
                 using (var specificEncoderReader = new StreamReader(fileStream, encoding))
@@ -68,11 +68,6 @@ namespace PicklesDoc.Pickles
             }
 
             return feature;
-        }
-
-        private Encoding GetEncoding(string filename)
-        {
-            return this.encodingDetector.GetEncoding(filename);
         }
     }
 }
