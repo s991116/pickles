@@ -2,6 +2,10 @@ Then(/^passing step$/) do
   # Nothing to be done here
 end
 
+Then(/^the step with danish characters like (.*)$/) do
+  # Nothing to be done here
+end
+
 Then(/^inconclusive step$/) do
   pending # We want pending here
 end
