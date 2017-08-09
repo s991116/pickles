@@ -1,8 +1,8 @@
-Then(/^passing step$/) do
+﻿Then(/^passing step$/) do
   # Nothing to be done here
 end
 
-Then(/^the step with danish characters like (.*)$/) do
+Then(/^the scenario with danish characters like æøå and ÆØÅ shall pass$/) do
   # Nothing to be done here
 end
 

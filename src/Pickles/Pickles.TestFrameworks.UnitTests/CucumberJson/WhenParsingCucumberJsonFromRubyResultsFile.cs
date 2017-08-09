@@ -154,7 +154,7 @@ namespace PicklesDoc.Pickles.TestFrameworks.UnitTests.CucumberJson
           base.ThenCanReadResultOfScenarioOutlineWithUmlauts();
         }
 
-        [Test, Ignore("Cannot generate result-file for CucumberJS and Cucumber (Ruby)")]
+        [Test]
         public new void ThenCanReadResultOfScenarioWithDanishCharacters()
         {
             base.ThenCanReadResultOfScenarioWithDanishCharacters();
