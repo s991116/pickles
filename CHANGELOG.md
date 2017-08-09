@@ -14,6 +14,12 @@ Features in Experimental are subject to change and removal without being conside
 
 This document is formatted according to the principles of [Keep A CHANGELOG](http://keepachangelog.com).
 
+## Unreleased
+
+### Fixed
+
+- Pickles is unable to deal with Danish characters ([477](https://github.com/picklesdoc/pickles/pull/477)) (by [@s991116](https://github.com/s991116))
+
 ## [2.16.0] - 2017-06-06
 
 ### Added
