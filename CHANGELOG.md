@@ -20,6 +20,14 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 
 - Pickles is unable to deal with Danish characters ([477](https://github.com/picklesdoc/pickles/pull/477)) (by [@s991116](https://github.com/s991116))
 
+## [2.16.1] - 2017-08-07
+
+### Fixed
+
+- Remove unnecessary backslash conversion in json feature tree ([469](https://github.com/picklesdoc/pickles/pull/469)) (by [@AntoineTheb](https://github.com/AntoineTheb))
+- Pickles cannot deal with languages that have a hyphen in the name ([478](https://github.com/picklesdoc/pickles/pull/478)) (by [@dirkrombauts](https://github.com/dirkrombauts))
+
+
 ## [2.16.0] - 2017-06-06
 
 ### Added
