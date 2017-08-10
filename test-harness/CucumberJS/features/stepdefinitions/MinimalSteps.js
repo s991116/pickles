@@ -1,30 +1,32 @@
-'use strict';
+ï»¿'use strict';
 
 var assert = require('assert');
+var {defineSupportCode} = require('cucumber');
 
-module.exports = function() {
+defineSupportCode(function({Then}) {
 
-    this.Then('the step with danish characters like æøå and ÆØÅ shall pass',
+    Then('the step with danish characters like Ã¦Ã¸Ã¥ and Ã†Ã˜Ã… shall pass',
         function(callback) {
             // nothing to be done here
             callback();
         });
 
-    this.Then(/^passing step$/,
+    Then(/^passing step$/,
         function(callback) {
             // nothing to be done here
             callback();
         });
 
-    this.Then(/^inconclusive step$/,
+    Then(/^inconclusive step$/,
         function(callback) {
             // we want pending here
             callback(null, 'pending');
         });
 
-    this.Then(/^failing step$/,
+    Then(/^failing step$/,
         function(callback) {
             assert.equal("true", "false");
             callback();
         });
-};
+});
+
